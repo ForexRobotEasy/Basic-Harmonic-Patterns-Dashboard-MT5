@@ -1,0 +1,97 @@
+
+//+------------------------------------------------------------------+
+//|                          Basic Harmonic Patterns Dashboard MT5    |
+//|                          Developer: Forex Robot Easy Team        |
+//|                          Website: forexroboteasy.com              |
+//+------------------------------------------------------------------+
+
+//--- External parameters
+input int deviationLimit = 5; // Deviation limit for pattern detection
+
+//--- Define constants
+const int MAX_SYMBOLS = 100; // Maximum number of symbols to monitor
+const int MAX_PATTERNS = 4; // Maximum number of patterns
+
+//--- Structure for storing pattern information
+struct CPattern
+{
+   ENUM_HARMONIC_PATTERN_TYPE type; // Pattern type
+   double entryPrice; // Recommended entry price
+   double stopLossPrice; // Stop-loss price
+   double takeProfitPrices[3]; // Take-profit prices
+   double currentPrice; // Current price of the symbol
+   int ageOfPattern; // Age of the pattern in bars
+   string alertSettings; // Alert settings for pattern detection
+};
+
+//--- Array to store pattern information for each symbol
+CPattern patterns[MAX_SYMBOLS][MAX_PATTERNS];
+
+//--- Function to update pattern information for a symbol
+void UpdatePattern(int symbolIndex, ENUM_HARMONIC_PATTERN_TYPE patternType, double entry, double stopLoss, double[] takeProfit, double current, int age, string alert)
+{
+   int emptyPatternIndex = -1;
+   for(int i=0; i<MAX_PATTERNS; i++)
+   {
+      if(patterns[symbolIndex][i].type == PATTERN_NONE)
+      {
+         emptyPatternIndex = i;
+         break;
+      }
+   }
+   
+   if(emptyPatternIndex >= 0)
+   {
+      patterns[symbolIndex][emptyPatternIndex].type = patternType;
+      patterns[symbolIndex][emptyPatternIndex].entryPrice = entry;
+      patterns[symbolIndex][emptyPatternIndex].stopLossPrice = stopLoss;
+      ArrayCopy(takeProfit, patterns[symbolIndex][emptyPatternIndex].takeProfitPrices);
+      patterns[symbolIndex][emptyPatternIndex].currentPrice = current;
+      patterns[symbolIndex][emptyPatternIndex].ageOfPattern = age;
+      patterns[symbolIndex][emptyPatternIndex].alertSettings = alert;
+   }
+}
+
+//--- Function to display the dashboard
+void DisplayDashboard()
+{
+   // Code to display the dashboard with the required columns
+}
+
+//--- Function to sort the dashboard by a specific column
+void SortDashboard(int column)
+{
+   // Code to sort the dashboard by the specified column
+}
+
+//--- Function to display the pattern on the chart
+void DisplayPatternOnChart(int symbolIndex, int patternIndex)
+{
+   // Code to display the pattern on the chart for visual representation
+}
+
+//--- The main function
+void OnStart()
+{
+   // Code to select symbols for monitoring
+   // Code to customize color scheme
+   
+   // Main loop
+   while(!IsStopped())
+   {
+      // Code to retrieve data for each selected symbol
+      // Code to detect harmonic patterns for each symbol
+      // Code to update pattern information for each symbol
+      
+      // Code to display the dashboard
+      DisplayDashboard();
+      
+      // Code to sort the dashboard if required
+      SortDashboard(0);
+      
+      // Code to display the pattern on the chart if required
+      DisplayPatternOnChart(0, 0);
+      
+      Sleep(1000); // Delay for 1 second before the next iteration
+   }
+}
